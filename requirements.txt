@@ -1,0 +1,12 @@
+Flask
+Flask-Session
+requests
+flask-sqlalchemy
+nest_asyncio
+numpy
+datetime
+pandas
+chess.com
+requests
+chess
+stockfish
