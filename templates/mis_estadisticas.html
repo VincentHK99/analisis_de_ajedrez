@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = '{{ data.index.to_list() }}'
+  
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: "{{ data['Win'].to_list() }}",
+      }]
+    };
+  
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+    }
+  };
+</script>
+  
+<script>
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+</script>
+  
+{% endblock %}

@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 
 
-
 def pgn(game,timestamps=False,output='text'):
   """
   Takes game PGN data from chess.com and cleans
@@ -78,6 +77,7 @@ def pgn(game,timestamps=False,output='text'):
 
   return pgn
 
+
 def eval_points(board):
   """
   A function thath takes a chess board item as an agrument
@@ -103,6 +103,7 @@ def eval_points(board):
   point_difference  = white_counter - black_counter
 
   return point_difference, eval_dict
+
 
 def get_game_data(game):
   """
@@ -163,8 +164,6 @@ def castle_id(game):
       castle_dict[colour+'Castle'] = castle
 
   return castle_dict
-
-
 
 
 def game_sum(game):
@@ -258,7 +257,6 @@ def game_results(time_control='900+10',colour=0):
     consol_df.plot(kind='barh', stacked=True,color=['g','r','grey'],title='Game History for ' + str(colour) + ' at ' + str(time_control) + ' Time Control')
     consol_df.plot(kind='area',color=['g','r','grey'],title='Game History for ' +str(colour) + ' at ' + str(time_control) + ' Time Control')
   return consol_df.round(3)
-
 
 
 def full_game_data(player_name):
@@ -468,3 +466,32 @@ def full_game_data(player_name):
 
 
   return full_game_data
+
+
+def game_results(game_data,time_control='900+10',colour=0):
+  """
+  Returns Win/Draw/Loss percentages for games over different timen horizons (7,14,30,90 days ect.)
+  """
+  if colour == 0:
+    consol_df = pd.pivot_table(game_data[((game_data['Last'+str(7)+'Days'] == 1) & (game_data['TimeControl'] == time_control))],
+                      index='TimeControl',values=['Win','Loss','Draw'])
+
+    for i in [14,30,90,180,365]:
+      temp_df = pd.pivot_table(game_data[((game_data['Last'+str(i)+'Days'] == 1) & (game_data['TimeControl'] == time_control))],
+                  index='TimeControl',values=['Win','Loss','Draw'])
+      consol_df =  consol_df.append(temp_df,ignore_index=True) 
+
+    consol_df['Number of Days'] = ['Last 7 Days','Last 14 Days','Last 30 Days','Last 90 Days','Last 180 Days','Last 365 Days']
+    consol_df = consol_df[['Number of Days','Win','Loss','Draw']].set_index('Number of Days')
+  else:
+    consol_df = pd.pivot_table(game_data[((game_data['Last'+str(7)+'Days'] == 1) & (game_data['TimeControl'] == time_control) & (game_data['Colour'] == colour))],
+                      index='TimeControl',values=['Win','Loss','Draw'])
+
+    for i in [14,30,90,180,365]:
+      temp_df = pd.pivot_table(game_data[((game_data['Last'+str(i)+'Days'] == 1) & (game_data['TimeControl'] == time_control) & (game_data['Colour'] == colour))],
+                  index='TimeControl',values=['Win','Loss','Draw'])
+      consol_df =  consol_df.append(temp_df,ignore_index=True) 
+
+    consol_df['Number of Days'] = ['Last 7 Days','Last 14 Days','Last 30 Days','Last 90 Days','Last 180 Days','Last 365 Days']
+    consol_df = consol_df[['Number of Days','Win','Loss','Draw']].set_index('Number of Days')
+  return consol_df.round(3)

@@ -16,13 +16,18 @@ for i in game_data.columns:
   if is_datetime(game_data[i]) == True:
     game_data[i] = (pd.to_datetime(game_data[i]) - pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
 
-
-game_data_json = game_data
-data = game_data_json
-print(data['Win'][data['Win'] == 1].groupby(by=[data['ReasonedTerminated']]).sum())
-print(data['Win'][data['Win'] == 1].groupby(by=[data['ReasonedTerminated']]).sum().to_list())
+results = functions.game_results(game_data,time_control='900+10',colour=0)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html",data=game_data_json)
+    return render_template("index.html")
+
+@app.route("/analisis_del_juego")
+def analisis_del_juego():
+    return render_template("analisis_del_juego.html",data=game_data)
+
+
+@app.route("/mis_estadisticas")
+def mis_estadisticas():
+    return render_template("mis_estadisticas.html",data=results)

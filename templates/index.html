@@ -1,53 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-</head>
-<body>
-    <div>
-        <canvas id="myChart"></canvas>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var labels = ['checkmate',
-                'game abandoned',
-                'on time',
-                'resignation']
-
-        var wins = "{{ data['Win'][data['Win'] == 1].groupby(by=[data['ReasonedTerminated']]).sum().to_list() }}";
+{% extends 'base.html' %}
+{% block body %}
+    <form action="action_page.php" method="post">
         
-      
-        var data = {
-            labels: labels,
-            datasets: [{
-                label: 'My First Dataset',
-                data: wins,
-                backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(75, 192, 192)',
-                'rgb(255, 205, 86)',
-                'rgb(201, 203, 207)'
-                ]
-            }]
-            };
-         
-    </script>
-    <script>
-        const config = {
-            type: 'pie',
-            data: data,
-            };
-    </script>
-    <script>
-        var myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-                );
-    </script>
-      
+    
+        <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+        
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+        
+            <button type="submit">Login</button>
+            <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+    
+  </form>
   
-
-
-</body>
-</html>
+{% endblock %}

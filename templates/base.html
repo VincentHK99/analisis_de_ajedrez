@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--use bootstrap to save time on front end development while still prototyping--> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!--use css to manually change -->
+    <link rel="stylesheet" type="text/css" href="static/styles.css" /> 
+
+    <!--use block title to allow different titles for each different html file-->
+    <title>{% block title %} {% endblock %} </title>
+  </head>
+
+  <body>
+    <!--Bootstrap javascript bundle (not 100% sure if necessary)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+    <!--Navigation Bar from bootstrap (https://getbootstrap.com/docs/5.2/components/navbar/)
+    This nav bar will be in every page on the website-->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Analisis de Ajedrez</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/analisis_del_juego">Análisis del Juego</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/mis_estadisticas">Mis Estadisticas</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% block body %} {% endblock %}
+</body>
+</html>
