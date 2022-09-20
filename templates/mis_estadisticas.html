@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 {% block body %}
 
-
+<form class="time_control_select" action="http://localhost:5000/mis_estadisticas" method = 'POST'>
+  <input class="btn-check" type="radio" id="900+10" name="time_control" value="900+10" autocomplete="off" checked>
+  <label class="btn btn-secondary" for="900+10">15+10</label>
+  <input class="btn-check" type="radio" id="600" name="time_control" value="600" autocomplete="off">
+  <label class="btn btn-secondary" for="600">10</label>
+  <input class="btn-check" type="radio" id="300+5" name="time_control" value="300+5" autocomplete="off">
+  <label class="btn btn-secondary" for="300+5">5+5</label>
+  <input class="btn-check" type="radio" id="300" name="time_control" value="300" autocomplete="off">
+  <label class="btn btn-secondary" for="300">5</label>
+  <input class="btn-check" type="radio" id="180" name="time_control" value="180" autocomplete="off">
+  <label class="btn btn-secondary" for="180">3</label>
+  <input class="btn-check" type="radio" id="120+1" name="time_control" value="120+1" autocomplete="off">
+  <label class="btn btn-secondary" for="120+1">2+1</label>
+  <input class="btn-check" type="radio" id="60" name="time_control" value="60" autocomplete="off">
+  <label class="btn btn-secondary" for="60">1</label>
+  <input class="btn btn-primary" type = "submit" value = "submit" />
+</form>
 <div>
     <canvas id="myChart"></canvas>
 </div>
@@ -18,19 +34,19 @@
         {
           label: 'Win',
           data: win_data,
-          backgroundColor: 'rgb(0,100,0)'
+          backgroundColor: 'rgb(85,161,148)'
           
         },
         {
           label: 'Loss',
           data: loss_data,
-          backgroundColor: 'rgb(100,0,0)'
+          backgroundColor: 'rgb(241,106,111)'
         
         },        
         {
           label: 'Draw',
           data: draw_data,
-          backgroundColor: 'rgb(0,0,100)'
+          backgroundColor: 'rgb(152,160,166)'
         },
       ]
     };
@@ -39,10 +55,11 @@
         type: 'bar',
         data: data,
         options: {
+          indexAxis: 'y',
           plugins: {
             title: {
               display: true,
-              text: 'Chart.js Bar Chart - Stacked'
+              text: 'Game Results Over Time'
             },
           },
           responsive: true,

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, jsonify
+from flask import Flask, render_template, request
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 import pandas as pd
 import functions
@@ -16,7 +16,7 @@ for i in game_data.columns:
   if is_datetime(game_data[i]) == True:
     game_data[i] = (pd.to_datetime(game_data[i]) - pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
 
-results = functions.game_results(game_data,time_control='900+10',colour=0)
+
 
 
 @app.route("/")
@@ -28,6 +28,14 @@ def analisis_del_juego():
     return render_template("analisis_del_juego.html",data=game_data)
 
 
-@app.route("/mis_estadisticas")
+@app.route("/mis_estadisticas",methods=['POST','GET'])
 def mis_estadisticas():
+    if request.method == 'POST':
+        time_control = request.form.get('time_control')
+        print(time_control)
+        results = functions.game_results(game_data,time_control=time_control,colour=0)
+    else:
+        time_control = '900+10'
+        results = functions.game_results(game_data,time_control=time_control,colour=0)
+    
     return render_template("mis_estadisticas.html",data=results)

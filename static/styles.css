@@ -2,3 +2,12 @@
     padding:  20ex;
     text-align: center;
 }
+
+canvas {
+    padding: 3%;
+}
+
+.time_control_select {
+    text-align: right;
+    padding: 1%;
+}
