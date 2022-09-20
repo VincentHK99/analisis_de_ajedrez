@@ -11,3 +11,11 @@ canvas {
     text-align: right;
     padding: 1%;
 }
+
+hr {
+    margin: auto;
+    width: 90%;
+    padding: 1%;
+    border-top: 1px solid black
+    colo
+}
