@@ -38,4 +38,4 @@ def mis_estadisticas():
         time_control = '900+10'
         results = functions.game_results(game_data,time_control=time_control,colour=0)
     
-    return render_template("mis_estadisticas.html",data=results)
+    return render_template("mis_estadisticas.html",data=results,opening_data=functions.opening_sum(game_data,90))

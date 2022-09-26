@@ -83,5 +83,68 @@
     );
 </script>
 <hr />
+<div>
+  <canvas id="myChart2"></canvas>
+</div>
+<script>
+  const labels2 = JSON.parse('{{ opening_data.index.to_list()|tojson }}');
+  const win_data2 = JSON.parse("{{ opening_data['Win'].to_list()|tojson }}")
+  const loss_data2 = JSON.parse("{{ opening_data['Loss'].to_list()|tojson }}")
+  const draw_data2 = JSON.parse("{{ opening_data['Draw'].to_list()|tojson }}")
+
+  const data2 = {
+    labels: labels2,
+    datasets: [
+      {
+        label: 'Win',
+        data: win_data2,
+        backgroundColor: 'rgb(85,161,148)'
+        
+      },
+      {
+        label: 'Loss',
+        data: loss_data2,
+        backgroundColor: 'rgb(241,106,111)'
+      
+      },        
+      {
+        label: 'Draw',
+        data: draw_data2,
+        backgroundColor: 'rgb(152,160,166)'
+      },
+    ]
+  };
+  let delayed2;
+  const config2 = {
+      type: 'bar',
+      data: data2,
+      options: {
+        indexAxis: 'y',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Game Results Over Time'
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true
+          }
+        }
+      }
+      };
+
+</script>
+
+<script>
+    const myChart2 = new Chart(
+      document.getElementById('myChart2'),
+      config2
+    );
+</script>
   
 {% endblock %}
