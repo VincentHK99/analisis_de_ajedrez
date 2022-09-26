@@ -495,3 +495,12 @@ def game_results(game_data,time_control='900+10',colour=0):
     consol_df['Number of Days'] = ['Last 7 Days','Last 14 Days','Last 30 Days','Last 90 Days','Last 180 Days','Last 365 Days']
     consol_df = consol_df[['Number of Days','Win','Loss','Draw']].set_index('Number of Days')
   return consol_df.round(3)
+
+
+def opening_sum(game_data,days_analysed=0):
+  if days_analysed !=0:
+    game_data = game_data[game_data['Last'+str(days_analysed)+'Days'] == 1]
+  eco_sum = pd.pivot_table(game_data,index='ECO',values=['Win','Loss','Draw'])
+  eco_count = pd.pivot_table(game_data,index='ECO',values='Event',aggfunc='count')
+  eco_data = pd.merge(eco_sum,eco_count,left_on='ECO',right_on='ECO')
+  return eco_data.round(3)
