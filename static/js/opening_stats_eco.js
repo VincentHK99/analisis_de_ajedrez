@@ -36,9 +36,10 @@ const opn_data_eco = {
         scales: {
           x: {
             stacked: true,
+            max: 1
           },
           y: {
-            stacked: true
+            stacked: true,
           }
         }
       }

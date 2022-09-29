@@ -36,6 +36,7 @@ const opn_config_class = {
       scales: {
         x: {
           stacked: true,
+          max: 1
         },
         y: {
           stacked: true
