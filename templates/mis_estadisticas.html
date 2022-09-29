@@ -37,11 +37,11 @@
   <canvas id="opnChart"></canvas>
 </div>
 <script>
-  opn_labels = JSON.parse('{{ opening_data.index.to_list()|tojson }}');
-  opn_win_data = JSON.parse("{{ opening_data['Win'].to_list()|tojson }}")
-  opn_loss_data = JSON.parse("{{ opening_data['Loss'].to_list()|tojson }}")
-  opn_draw_data = JSON.parse("{{ opening_data['Draw'].to_list()|tojson }}")
-  opn_title = "Game Results - Openings"
+  opn_labels = JSON.parse('{{ opening_data_eco.index.to_list()|tojson }}');
+  opn_win_data = JSON.parse("{{ opening_data_eco['Win'].to_list()|tojson }}")
+  opn_loss_data = JSON.parse("{{ opening_data_eco['Loss'].to_list()|tojson }}")
+  opn_draw_data = JSON.parse("{{ opening_data_eco['Draw'].to_list()|tojson }}")
+  opn_title = "Game Results - ECO"
   opn_element_id = "opnChart"
 </script>
 <script type="text/javascript" src="static/js/opening_stats.js"></script>
