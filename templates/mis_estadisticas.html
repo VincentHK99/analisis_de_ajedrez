@@ -19,84 +19,31 @@
   <input class="btn btn-primary" type = "submit" value = "submit" />
 </form>
 <div>
-    <canvas id="myChart"></canvas>
+    <canvas id="gameChart"></canvas>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const labels = JSON.parse('{{ data.index.to_list()|tojson }}');
-  const win_data = JSON.parse("{{ data['Win'].to_list()|tojson }}")
-  const loss_data = JSON.parse("{{ data['Loss'].to_list()|tojson }}")
-  const draw_data = JSON.parse("{{ data['Draw'].to_list()|tojson }}")
-  const title = "Game Results"
-  const element_id = "myChart"
+  let labels = JSON.parse('{{ data.index.to_list()|tojson }}');
+  let win_data = JSON.parse("{{ data['Win'].to_list()|tojson }}")
+  let loss_data = JSON.parse("{{ data['Loss'].to_list()|tojson }}")
+  let draw_data = JSON.parse("{{ data['Draw'].to_list()|tojson }}")
+  let title = "Game Results"
+  let element_id = "gameChart"
 </script>
-<script type="text/javascript" src="static/js/game_stats.js">
- 
-</script>
+<script type="text/javascript" src="static/js/game_stats.js"></script>
 
 <hr />
 <div>
-  <canvas id="myChart2"></canvas>
+  <canvas id="opnChart"></canvas>
 </div>
 <script>
-  const labels2 = JSON.parse('{{ opening_data.index.to_list()|tojson }}');
-  const win_data2 = JSON.parse("{{ opening_data['Win'].to_list()|tojson }}")
-  const loss_data2 = JSON.parse("{{ opening_data['Loss'].to_list()|tojson }}")
-  const draw_data2 = JSON.parse("{{ opening_data['Draw'].to_list()|tojson }}")
-
-  const data2 = {
-    labels: labels2,
-    datasets: [
-      {
-        label: 'Win',
-        data: win_data2,
-        backgroundColor: 'rgb(85,161,148)'
-        
-      },
-      {
-        label: 'Loss',
-        data: loss_data2,
-        backgroundColor: 'rgb(241,106,111)'
-      
-      },        
-      {
-        label: 'Draw',
-        data: draw_data2,
-        backgroundColor: 'rgb(152,160,166)'
-      },
-    ]
-  };
-  let delayed2;
-  const config2 = {
-      type: 'bar',
-      data: data2,
-      options: {
-        indexAxis: 'y',
-        plugins: {
-          title: {
-            display: true,
-            text: 'Game Results Over Time'
-          },
-        },
-        responsive: true,
-        scales: {
-          x: {
-            stacked: true,
-          },
-          y: {
-            stacked: true
-          }
-        }
-      }
-      };
-
+  opn_labels = JSON.parse('{{ opening_data.index.to_list()|tojson }}');
+  opn_win_data = JSON.parse("{{ opening_data['Win'].to_list()|tojson }}")
+  opn_loss_data = JSON.parse("{{ opening_data['Loss'].to_list()|tojson }}")
+  opn_draw_data = JSON.parse("{{ opening_data['Draw'].to_list()|tojson }}")
+  opn_title = "Game Results - Openings"
+  opn_element_id = "opnChart"
 </script>
-
-<script>
-    const myChart2 = new Chart(
-      document.getElementById('myChart2'),
-      config2
-    );
-</script>
+<script type="text/javascript" src="static/js/opening_stats.js"></script>
   
 {% endblock %}
