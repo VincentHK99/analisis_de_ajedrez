@@ -534,3 +534,21 @@ def opening_sum_class(game_data,days_analysed=0):
   eco_count = pd.pivot_table(game_data,index='ECO',values='Event',aggfunc='count')
   eco_data = pd.merge(eco_sum,eco_count,left_on='ECO',right_on='ECO')
   return eco_data.round(3)
+
+
+def data_clean(game_data,username):
+  """
+  Makes sure the time and point difference values in the dataframe are from the 
+  perspective of the player who's username is entered rather than whoever is white
+  """
+  columns = ['PointDifference10','TimeDifference10','AvgPointDifferenceMove10','AvgTimeDifferenceMove10','PointDifference15','TimeDifference15',
+           'AvgPointDifferenceMove15','AvgTimeDifferenceMove15','PointDifference20','TimeDifference20','AvgPointDifferenceMove20','AvgTimeDifferenceMove20',
+           'PointDifference25','TimeDifference25','AvgPointDifferenceMove25','AvgTimeDifferenceMove25','PointDifference30','TimeDifference30',
+           'AvgPointDifferenceMove30','AvgTimeDifferenceMove30','PointDifference40','TimeDifference40','AvgPointDifferenceMove40','AvgTimeDifferenceMove40',
+           'AvgPointDifferenceFullGame','AvgTimeDifferenceFullGame']
+
+
+  for column in columns:
+    game_data[column][data['Black'] == username] =  game_data[column] * -1
+
+  return game_data
