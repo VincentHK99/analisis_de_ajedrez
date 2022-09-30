@@ -188,13 +188,13 @@ def game_sum(game):
           summary_dict[piece_names[j] + 'Remaining' + str(i)] = 0
 
     else:
-      summary_dict['PointDifference'+str(i)] = ''
-      summary_dict['TimeDifference'+str(i)] = ''
-      summary_dict['AvgPointDifferenceMove'+str(i)] = ''
-      summary_dict['AvgTimeDifferenceMove'+str(i)] = ''
+      summary_dict['PointDifference'+str(i)] = np.nan
+      summary_dict['TimeDifference'+str(i)] = np.nan
+      summary_dict['AvgPointDifferenceMove'+str(i)] = np.nan
+      summary_dict['AvgTimeDifferenceMove'+str(i)] = np.nan
 
       for j in piece_names.keys():
-        summary_dict[piece_names[j] + 'Remaining' + str(i)] = ''
+        summary_dict[piece_names[j] + 'Remaining' + str(i)] = np.nan
 
 
   if len(game_data['MoveNumber']) != 0:
@@ -204,10 +204,10 @@ def game_sum(game):
     summary_dict['BlackCastle'] = castle_id(game)['BlackCastle']
 
   else:
-    summary_dict['AvgPointDifferenceFullGame'] = ''
-    summary_dict['AvgTimeDifferenceFullGame'] = ''
-    summary_dict['WhiteCastle'] = ''
-    summary_dict['BlackCastle'] = ''
+    summary_dict['AvgPointDifferenceFullGame'] = np.nan
+    summary_dict['AvgTimeDifferenceFullGame'] = np.nan
+    summary_dict['WhiteCastle'] = np.nan
+    summary_dict['BlackCastle'] = np.nan
 
   return summary_dict
 
