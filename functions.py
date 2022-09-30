@@ -536,7 +536,7 @@ def opening_sum_class(game_data,days_analysed=0):
   return eco_data.round(3)
 
 
-def data_clean(game_data,username):
+def data_clean(game_data):
   """
   Makes sure the time and point difference values in the dataframe are from the 
   perspective of the player who's username is entered rather than whoever is white
@@ -549,6 +549,6 @@ def data_clean(game_data,username):
 
 
   for column in columns:
-    game_data[column][data['Black'] == username] =  game_data[column] * -1
+    game_data[column][game_data['Colour'] == 'black'] =  game_data[column] * -1
 
   return game_data
