@@ -538,17 +538,37 @@ def opening_sum_class(game_data,days_analysed=0):
 
 def data_clean(game_data):
   """
-  Makes sure the time and point difference values in the dataframe are from the 
+  Makes sure the timedifference, point difference and piece remaining values in the dataframe are from the 
   perspective of the player who's username is entered rather than whoever is white
   """
-  columns = ['PointDifference10','TimeDifference10','AvgPointDifferenceMove10','AvgTimeDifferenceMove10','PointDifference15','TimeDifference15',
+  pt_columns = ['PointDifference10','TimeDifference10','AvgPointDifferenceMove10','AvgTimeDifferenceMove10','PointDifference15','TimeDifference15',
            'AvgPointDifferenceMove15','AvgTimeDifferenceMove15','PointDifference20','TimeDifference20','AvgPointDifferenceMove20','AvgTimeDifferenceMove20',
            'PointDifference25','TimeDifference25','AvgPointDifferenceMove25','AvgTimeDifferenceMove25','PointDifference30','TimeDifference30',
            'AvgPointDifferenceMove30','AvgTimeDifferenceMove30','PointDifference40','TimeDifference40','AvgPointDifferenceMove40','AvgTimeDifferenceMove40',
            'AvgPointDifferenceFullGame','AvgTimeDifferenceFullGame']
 
+  wcolumns = ['WBishopRemaining10',	'WBishopRemaining15',	'WBishopRemaining20',	'WBishopRemaining25',	'WBishopRemaining30',
+            'WBishopRemaining40',	'WKingRemaining10',	'WKingRemaining15',	'WKingRemaining20',	'WKingRemaining25',	'WKingRemaining30',
+            'WKingRemaining40',	'WKnightRemaining10',	'WKnightRemaining15',	'WKnightRemaining20',	'WKnightRemaining25',	'WKnightRemaining30',	
+            'WKnightRemaining40',	'WPawnRemaining10',	'WPawnRemaining15',	'WPawnRemaining20',	'WPawnRemaining25',	'WPawnRemaining30',	'WPawnRemaining40',	
+            'WQueenRemaining10',	'WQueenRemaining15',	'WQueenRemaining20',	'WQueenRemaining25',	'WQueenRemaining30',	'WQueenRemaining40',	'WRookRemaining10',	
+            'WRookRemaining15',	'WRookRemaining20',	'WRookRemaining25',	'WRookRemaining30','WRookRemaining40']
 
-  for column in columns:
+  bcolumns = ['BBishopRemaining10',	'BBishopRemaining15',	'BBishopRemaining20',	'BBishopRemaining25',	'BBishopRemaining30',	'BBishopRemaining40',
+            'BKingRemaining10',	'BKingRemaining15',	'BKingRemaining20',	'BKingRemaining25',	'BKingRemaining30',	'BKingRemaining40',	'BKnightRemaining10',
+            'BKnightRemaining15',	'BKnightRemaining20',	'BKnightRemaining25',	'BKnightRemaining30',	'BKnightRemaining40',	'BPawnRemaining10',	'BPawnRemaining15',
+            'BPawnRemaining20',	'BPawnRemaining25',	'BPawnRemaining30',	'BPawnRemaining40',	'BQueenRemaining10',	'BQueenRemaining15',	'BQueenRemaining20',
+            'BQueenRemaining25',	'BQueenRemaining30',	'BQueenRemaining40',	'BRookRemaining10',	'BRookRemaining15',	'BRookRemaining20',	'BRookRemaining25',
+            'BRookRemaining30',	'BRookRemaining40']
+
+
+  for column in pt_columns:
     game_data[column][game_data['Colour'] == 'black'] =  game_data[column] * -1
+
+  for i in range(len(wcolumns)):
+    game_data.loc[game_data['Colour'] == 'white', 'My' + wcolumns[i][1:]] = game_data[wcolumns[i]]
+    game_data.loc[game_data['Colour'] == 'black', 'My' + wcolumns[i][1:]] = game_data[bcolumns[i]]
+    game_data.loc[game_data['Colour'] == 'white', 'Opp' + wcolumns[i][1:]] = game_data[bcolumns[i]]
+    game_data.loc[game_data['Colour'] == 'black', 'Opp' + wcolumns[i][1:]] = game_data[wcolumns[i]]
 
   return game_data
