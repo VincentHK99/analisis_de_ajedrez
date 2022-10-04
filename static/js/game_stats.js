@@ -37,6 +37,7 @@ const data = {
         scales: {
           x: {
             stacked: true,
+            max: 1
           },
           y: {
             stacked: true
