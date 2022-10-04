@@ -59,19 +59,7 @@
 </script>
 <script type="text/javascript" src="static/js/opening_stats_class.js"></script>
 <hr />
-<div>
-  <canvas id="opnChartSubclass"></canvas>
-</div>
-<script>
-  opn_labels_subclass = JSON.parse('{{ opening_data_subclass.index.to_list()|tojson }}');
-  opn_win_data_subclass = JSON.parse("{{ opening_data_subclass['Win'].to_list()|tojson }}")
-  opn_loss_data_subclass = JSON.parse("{{ opening_data_subclass['Loss'].to_list()|tojson }}")
-  opn_draw_data_subclass = JSON.parse("{{ opening_data_subclass['Draw'].to_list()|tojson }}")
-  opn_title_subclass = "Game Results - Sub-class"
-  opn_element_id_subclass = "opnChartSubclass"
-</script>
-<script type="text/javascript" src="static/js/opening_stats_subclass.js"></script>
-<hr />
+
  <form class="class_opening_select" action="http://localhost:5000/opening_analysis" method = 'POST'>
   {% for opening in opening_data_class.index.to_list() %}
     <input class="btn-check" type="radio" id="{{ opening }}" name="opening_select" value="{{ opening }}" autocomplete="off" checked>

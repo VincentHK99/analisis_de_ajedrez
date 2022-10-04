@@ -1,1 +1,14 @@
 <h1>{{ opening }}</h1>
+
+<div>
+    <canvas id="opnChartSubclass"></canvas>
+  </div>
+  <script>
+    opn_labels_subclass = JSON.parse('{{ opening_data_subclass.index.to_list()|tojson }}');
+    opn_win_data_subclass = JSON.parse("{{ opening_data_subclass['Win'].to_list()|tojson }}")
+    opn_loss_data_subclass = JSON.parse("{{ opening_data_subclass['Loss'].to_list()|tojson }}")
+    opn_draw_data_subclass = JSON.parse("{{ opening_data_subclass['Draw'].to_list()|tojson }}")
+    opn_title_subclass = "Game Results - Sub-class"
+    opn_element_id_subclass = "opnChartSubclass"
+  </script>
+  <script type="text/javascript" src="static/js/opening_stats_subclass.js"></script>
