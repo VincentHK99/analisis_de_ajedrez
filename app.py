@@ -32,7 +32,6 @@ def analisis_del_juego():
 def mis_estadisticas():
     if request.method == 'POST':
         time_control = request.form.get('time_control')
-        print(time_control)
         results = functions.game_results(game_data,time_control=time_control,colour=0)
     else:
         time_control = '900+10'
@@ -42,3 +41,9 @@ def mis_estadisticas():
                             opening_data_eco=functions.opening_sum_eco(game_data,90),
                             opening_data_class=functions.opening_sum_class(game_data,90),
                             opening_data_subclass=functions.opening_sum_subclass(game_data,90))
+
+@app.route("/opening_analysis",methods=['POST','GET'])
+def opening_analysis():
+    if request.method == 'POST':
+        opening = request.form.get('opening_select')
+    return render_template("opening_analysis.html",opening=opening)
