@@ -71,5 +71,14 @@
   opn_element_id_subclass = "opnChartSubclass"
 </script>
 <script type="text/javascript" src="static/js/opening_stats_subclass.js"></script>
+<hr />
+
+{% for opening in opening_data_class.index.to_list() %}
+  opening = {{ opening }}
+  
+{% endfor %}
+
+
+
   
 {% endblock %}
