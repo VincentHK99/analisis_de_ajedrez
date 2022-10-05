@@ -4,12 +4,12 @@
         <canvas id="opnChartClass"></canvas>
     </div>
     <script>
-        opn_labels_class = JSON.parse('{{ opening_data_class.index.to_list()|tojson }}');
-        opn_win_data_class = JSON.parse("{{ opening_data_class['Win'].to_list()|tojson }}")
-        opn_loss_data_class = JSON.parse("{{ opening_data_class['Loss'].to_list()|tojson }}")
-        opn_draw_data_class = JSON.parse("{{ opening_data_class['Draw'].to_list()|tojson }}")
-        opn_title_class = "Game Results - Class"
-        opn_element_id_class = "opnChartClass"
+        let opn_labels_class = JSON.parse('{{ opening_data_class.index.to_list()|tojson }}');
+        let opn_win_data_class = JSON.parse("{{ opening_data_class['Win'].to_list()|tojson }}")
+        let opn_loss_data_class = JSON.parse("{{ opening_data_class['Loss'].to_list()|tojson }}")
+        let opn_draw_data_class = JSON.parse("{{ opening_data_class['Draw'].to_list()|tojson }}")
+        let opn_title_class = "Game Results - Class"
+        let opn_element_id_class = "opnChartClass"
     </script>
     <script type="text/javascript" src="static/js/opening_stats_class.js"></script>
 

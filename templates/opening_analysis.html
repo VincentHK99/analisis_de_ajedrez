@@ -1,39 +1,41 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h1>{{ opening }}</h1>
+  <h1>{{ opening }}</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Opening</th>
-      <th scope="col">Eco</th>
-      <th scope="col"># of Games</th>
-      <th scope="col"># of Games (last 90 days)</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    {% for i in opening_data_eco.index.to_list() %}
-    <tr>
-      <td>{{ i[0] }}</td>
-      <td>{{ i[1] }}</td>
-      <td>{{ opening_data_eco.loc[i[0]].loc[i[1]]['Event'] }}</td>
-      <td>{{ opening_data_eco90.loc[i[0]].loc[i[1]]['Event'] }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-  <div>
-    <canvas id="opnChartEco"></canvas>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Opening</th>
+        <th scope="col">Eco</th>
+        <th scope="col"># of Games</th>
+        <th scope="col"># of Games (last 90 days)</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in opening_data_eco.index.to_list() %}
+      <tr>
+        <td>{{ i[0] }}</td>
+        <td>{{ i[1] }}</td>
+        <td>{{ opening_data_eco.loc[i[0]].loc[i[1]]['Event'] }}</td>
+        {% if (i[0],i[1]) in opening_data_eco90.index.to_list() %}
+        <td>{{ opening_data_eco90.loc[i[0]].loc[i[1]]['Event'] }}</td>
+        {% else %}
+        <td>0</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<div><canvas id="opnChartEco"></canvas></div>
   <script>
-    opn_labels_eco = JSON.parse('{{ opening_data_eco.index.to_list()|tojson }}');
-    opn_win_data_eco = JSON.parse("{{ opening_data_eco['Win'].to_list()|tojson }}")
-    opn_loss_data_eco = JSON.parse("{{ opening_data_eco['Loss'].to_list()|tojson }}")
-    opn_draw_data_eco = JSON.parse("{{ opening_data_eco['Draw'].to_list()|tojson }}")
-    opn_title_eco = "Game Results - ECO"
-    opn_element_id_eco = "opnChartEco"
+    let opn_labels_eco = JSON.parse('{{ opening_data_eco.index.to_list()|tojson }}');
+    let opn_win_data_eco = JSON.parse("{{ opening_data_eco['Win'].to_list()|tojson }}");
+    let opn_loss_data_eco = JSON.parse("{{ opening_data_eco['Loss'].to_list()|tojson }}");
+    let opn_draw_data_eco = JSON.parse("{{ opening_data_eco['Draw'].to_list()|tojson }}");
+    let opn_title_eco = "Game Results - ECO";
+    let opn_element_id_eco = "opnChartEco";
   </script>
   <script type="text/javascript" src="static/js/opening_stats_eco.js"></script>
 {% endblock %}
