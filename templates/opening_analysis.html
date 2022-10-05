@@ -38,4 +38,36 @@
     let opn_element_id_eco = "opnChartEco";
   </script>
   <script type="text/javascript" src="static/js/opening_stats_eco.js"></script>
-{% endblock %}
+  {% for i in opening_data_eco.index.to_list() %}
+
+  <div class="pieChartContainer{{ loop.index }}" style=" height:25vh; width:50vw; padding: 20px;">
+    <hr />
+    <h3>{{i[0]}}: {{i[1]}}</h3>
+    <canvas id="pieChart{{ loop.index }}" width="10" height="10"></canvas>
+  </div>
+    <script>
+      var myChart = new Chart(document.getElementById('pieChart{{ loop.index }}'), {
+      type: 'pie',
+      data: {
+        labels: ['Win', 'Loss','Draw'],
+        datasets: [{
+          label: "{{i[0]}}: {{i[1]}}",
+          data: ["{{ opening_data_eco.loc[i[0]].loc[i[1]]['Win'] }}", 
+                "{{ opening_data_eco.loc[i[0]].loc[i[1]]['Loss'] }}",
+                "{{ opening_data_eco.loc[i[0]].loc[i[1]]['Draw'] }}"],
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true},
+                backgroundColor: [
+                  'rgb(85,161,148)',
+                  'rgb(241,106,111)',
+                  'rgb(152,160,166)'
+                      ],
+                borderWidth: 1
+       }]
+     },
+   });
+    </script>
+    <br>
+  {% endfor %}
+  {% endblock %}
