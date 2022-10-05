@@ -33,13 +33,11 @@ def mis_estadisticas():
         time_control = '900+10'
         results = functions.game_results(game_data,time_control=time_control,colour=0)
     
-    return render_template("mis_estadisticas.html",data=results,
-                            opening_data_eco=functions.opening_sum_eco(game_data,90),
-                            opening_data_class=functions.opening_sum_class(game_data,90))
+    return render_template("mis_estadisticas.html",data=results)
 
 @app.route("/opening",methods=['POST','GET'])
 def opening():
-    return render_template("opening.html")
+    return render_template("opening.html", opening_data_class=functions.opening_sum_class(game_data,90))
 
 
 @app.route("/middlegame",methods=['POST','GET'])
@@ -55,4 +53,6 @@ def endgame():
 def opening_analysis():
     if request.method == 'POST':
         opening = request.form.get('opening_select')
-    return render_template("opening_analysis.html",opening=opening,opening_data_subclass=functions.opening_sum_subclass(game_data,90))
+    return render_template("opening_analysis.html",opening=opening,
+                            opening_data_subclass=functions.opening_sum_subclass(game_data,90),
+                            opening_data_eco=functions.opening_sum_eco(game_data,90))
