@@ -37,7 +37,7 @@ def mis_estadisticas():
 
 @app.route("/opening",methods=['POST','GET'])
 def opening():
-    return render_template("opening.html", opening_data_class=functions.opening_sum_class(game_data))
+    return render_template("opening.html", opening_data_class=functions.opening_sum_class(game_data,90))
 
 
 @app.route("/middlegame",methods=['POST','GET'])
@@ -54,4 +54,5 @@ def opening_analysis():
     if request.method == 'POST':
         opening = request.form.get('opening_select')
     return render_template("opening_analysis.html",opening=opening,
-                            opening_data_eco=functions.opening_sum_eco(game_data,opening))
+                            opening_data_eco=functions.opening_sum_eco(game_data,opening),
+                            opening_data_eco90=functions.opening_sum_eco(game_data,opening,days_analysed=90))

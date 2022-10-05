@@ -3,6 +3,27 @@
 
 <h1>{{ opening }}</h1>
 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Opening</th>
+      <th scope="col">Eco</th>
+      <th scope="col"># of Games</th>
+      <th scope="col"># of Games (last 90 days)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for i in opening_data_eco.index.to_list() %}
+    <tr>
+      <td>{{ i[0] }}</td>
+      <td>{{ i[1] }}</td>
+      <td>{{ opening_data_eco.loc[i[0]].loc[i[1]]['Event'] }}</td>
+      <td>{{ opening_data_eco90.loc[i[0]].loc[i[1]]['Event'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
   <div>
     <canvas id="opnChartEco"></canvas>
   </div>
@@ -15,4 +36,4 @@
     opn_element_id_eco = "opnChartEco"
   </script>
   <script type="text/javascript" src="static/js/opening_stats_eco.js"></script>
-  {% endblock %}
+{% endblock %}
