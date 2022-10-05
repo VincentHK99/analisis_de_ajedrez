@@ -37,6 +37,20 @@ def mis_estadisticas():
                             opening_data_eco=functions.opening_sum_eco(game_data,90),
                             opening_data_class=functions.opening_sum_class(game_data,90))
 
+@app.route("/opening",methods=['POST','GET'])
+def opening():
+    return render_template("opening.html")
+
+
+@app.route("/middlegame",methods=['POST','GET'])
+def middlegame():
+    return render_template("middlegame.html")
+    
+
+@app.route("/endgame",methods=['POST','GET'])
+def endgame():
+    return render_template("endgame.html")
+
 @app.route("/opening_analysis",methods=['POST','GET'])
 def opening_analysis():
     if request.method == 'POST':
