@@ -23,10 +23,6 @@ for i in game_data.columns:
 def index():
     return render_template("index.html")
 
-@app.route("/analisis_del_juego")
-def analisis_del_juego():
-    return render_template("analisis_del_juego.html",data=game_data)
-
 
 @app.route("/mis_estadisticas",methods=['POST','GET'])
 def mis_estadisticas():
