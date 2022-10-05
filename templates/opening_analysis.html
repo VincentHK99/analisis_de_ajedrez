@@ -15,4 +15,17 @@
     opn_element_id_subclass = "opnChartSubclass"
   </script>
   <script type="text/javascript" src="static/js/opening_stats_subclass.js"></script>
+
+  <div>
+    <canvas id="opnChartEco"></canvas>
+  </div>
+  <script>
+    opn_labels_eco = JSON.parse('{{ opening_data_eco.index.to_list()|tojson }}');
+    opn_win_data_eco = JSON.parse("{{ opening_data_eco['Win'].to_list()|tojson }}")
+    opn_loss_data_eco = JSON.parse("{{ opening_data_eco['Loss'].to_list()|tojson }}")
+    opn_draw_data_eco = JSON.parse("{{ opening_data_eco['Draw'].to_list()|tojson }}")
+    opn_title_eco = "Game Results - ECO"
+    opn_element_id_eco = "opnChartEco"
+  </script>
+  <script type="text/javascript" src="static/js/opening_stats_eco.js"></script>
   {% endblock %}

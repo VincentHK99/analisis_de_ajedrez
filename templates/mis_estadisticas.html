@@ -32,46 +32,5 @@
 </script>
 <script type="text/javascript" src="static/js/game_stats.js"></script>
 
-<hr />
-<div>
-  <canvas id="opnChartEco"></canvas>
-</div>
-<script>
-  opn_labels_eco = JSON.parse('{{ opening_data_eco.index.to_list()|tojson }}');
-  opn_win_data_eco = JSON.parse("{{ opening_data_eco['Win'].to_list()|tojson }}")
-  opn_loss_data_eco = JSON.parse("{{ opening_data_eco['Loss'].to_list()|tojson }}")
-  opn_draw_data_eco = JSON.parse("{{ opening_data_eco['Draw'].to_list()|tojson }}")
-  opn_title_eco = "Game Results - ECO"
-  opn_element_id_eco = "opnChartEco"
-</script>
-<script type="text/javascript" src="static/js/opening_stats_eco.js"></script>
-<hr />
-<div>
-  <canvas id="opnChartClass"></canvas>
-</div>
-<script>
-  opn_labels_class = JSON.parse('{{ opening_data_class.index.to_list()|tojson }}');
-  opn_win_data_class = JSON.parse("{{ opening_data_class['Win'].to_list()|tojson }}")
-  opn_loss_data_class = JSON.parse("{{ opening_data_class['Loss'].to_list()|tojson }}")
-  opn_draw_data_class = JSON.parse("{{ opening_data_class['Draw'].to_list()|tojson }}")
-  opn_title_class = "Game Results - Class"
-  opn_element_id_class = "opnChartClass"
-</script>
-<script type="text/javascript" src="static/js/opening_stats_class.js"></script>
-<hr />
-
- <form class="class_opening_select" action="http://localhost:5000/opening_analysis" method = 'POST'>
-  {% for opening in opening_data_class.index.to_list() %}
-    <input class="btn-check" type="radio" id="{{ opening }}" name="opening_select" value="{{ opening }}" autocomplete="off" checked>
-    <label class="btn btn-secondary" for="{{ opening }}">{{ opening }}</label>
-    
-  
-  {% endfor %}
-  <input class="btn btn-primary" type = "submit" value = "submit" />
-  
- 
-
-
-
   
 {% endblock %}
