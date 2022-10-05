@@ -497,24 +497,24 @@ def game_results(game_data,time_control='900+10',colour=0):
   return consol_df.round(3)
 
 
-def opening_sum_eco(game_data,days_analysed=0):
+def opening_sum_eco(game_data,opening_class,days_analysed=0):
   if days_analysed !=0:
     game_data = game_data[game_data['Last'+str(days_analysed)+'Days'] == 1]
-  eco_sum = pd.pivot_table(game_data,index='ECO',values=['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event'],
+  eco_sum = pd.pivot_table(game_data,index=['higherMapping','name','ecoCode'],values=['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event'],
                            aggfunc={'Win': np.mean, 'Draw': np.mean,'Loss': np.mean,'PointDifference10':np.mean,'PointDifference20':np.mean,
                                     'PointDifference30':np.mean,'PointDifference40':np.mean,'Event':np.count_nonzero})
   
-  return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].round(3)
+  return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].loc[opening_class].round(3)
 
 
-def opening_sum_subclass(game_data,days_analysed=0):
+def opening_sum_subclass(game_data,opening_class,days_analysed=0,):
   if days_analysed !=0:
     game_data = game_data[game_data['Last'+str(days_analysed)+'Days'] == 1]
-  eco_sum = pd.pivot_table(game_data,index='name',values=['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event'],
+  eco_sum = pd.pivot_table(game_data,index=['higherMapping','name'],values=['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event'],
                            aggfunc={'Win': np.mean, 'Draw': np.mean,'Loss': np.mean,'PointDifference10':np.mean,'PointDifference20':np.mean,
                                     'PointDifference30':np.mean,'PointDifference40':np.mean,'Event':np.count_nonzero})
   
-  return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].round(3)
+  return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].loc[opening_class].round(3)
 
 
 
@@ -526,7 +526,6 @@ def opening_sum_class(game_data,days_analysed=0):
                                     'PointDifference30':np.mean,'PointDifference40':np.mean,'Event':np.count_nonzero})
   
   return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].round(3)
-
 
 
 def data_clean(game_data):
