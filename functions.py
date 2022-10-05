@@ -517,7 +517,6 @@ def opening_sum_subclass(game_data,opening_class,days_analysed=0,):
   return eco_sum[['Win','Loss','Draw','PointDifference10','PointDifference20','PointDifference30','PointDifference40','Event']].loc[opening_class].round(3)
 
 
-
 def opening_sum_class(game_data,days_analysed=0):
   if days_analysed !=0:
     game_data = game_data[game_data['Last'+str(days_analysed)+'Days'] == 1]

@@ -21,7 +21,6 @@
 <div>
     <canvas id="gameChart"></canvas>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   let labels = JSON.parse('{{ data.index.to_list()|tojson }}');
   let win_data = JSON.parse("{{ data['Win'].to_list()|tojson }}")
