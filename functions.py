@@ -396,6 +396,15 @@ def full_game_data(player_name):
   full_game_data['Last365Days'] = (datetime.now() - full_game_data['ACSTEndDateTime']).dt.days.apply(lambda x: 1 if x <= 365 else 0)
   full_game_data['Over365Days'] = (datetime.now() - full_game_data['ACSTEndDateTime']).dt.days.apply(lambda x: 1 if x > 365 else 0)
 
+  #create further mapping for point differences at move 10
+  full_game_data['PointDifference10Mapping'] = full_game_data['PointDifference10'].apply(lambda x: '-3 and below' if x <= -3 
+                                                                               else ('-2' if x == -2 
+                                                                               else ('-1' if x == -1
+                                                                               else ('0' if x == 0
+                                                                               else ('+1' if x == 1
+                                                                               else ('+2' if x == 2
+                                                                               else ('+3 and above' if x >= 3
+                                                                               else x)))))))
 
 
 
