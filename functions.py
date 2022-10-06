@@ -565,3 +565,12 @@ def data_clean(game_data):
   return game_data
 
 
+def middlegame_analysis(game_data,colour=0,days_analysed=0):
+  if colour != 0:
+    game_data = game_data[game_data['Colour'] == colour]
+  if days_analysed !=0:
+     game_data = game_data[game_data['Last'+str(days_analysed)+'Days'] == 1]
+  middle_sum = pd.pivot_table(game_data,index='PointDifference10Mapping',values=['PointDifference15','PointDifference20','PointDifference30','PointDifference40','Win','Draw','Loss','Event'],
+               aggfunc={'PointDifference15':np.mean,'PointDifference20':np.mean,'PointDifference30':np.mean,'PointDifference40':np.mean,'Win':np.mean,'Draw':np.mean,'Loss':np.mean,'Event':np.count_nonzero})
+  
+  return middle_sum[['PointDifference15','PointDifference20','PointDifference30','PointDifference40','Win','Draw','Loss','Event']].round(3)
