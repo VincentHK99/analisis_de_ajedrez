@@ -78,20 +78,25 @@
     var myChart = new Chart(document.getElementById('barChart{{ loop.index }}'), {
     type: 'bar',
     data: {
-      labels: ["Move 10","Move 20","Move 30","Move 40"],
+      labels: ["Move 10","Move 10 (last 90 days)","Move 20","Move 20 (last 90 days)","Move 30","Move 30 (last 90 days)","Move 40","Move 40 (last 90 days)"],
       datasets: [{
         label: "{{i[0]}}: {{i[1]}}",
-        data: ["{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference10'] }}", 
+        data: ["{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference10'] }}",
+              "{{ opening_data_eco90.loc[i[0]].loc[i[1]]['PointDifference10'] }}", 
               "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference20'] }}",
+              "{{ opening_data_eco90.loc[i[0]].loc[i[1]]['PointDifference20'] }}",
               "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference30'] }}",
-              "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference40'] }}"],
+              "{{ opening_data_eco90.loc[i[0]].loc[i[1]]['PointDifference30'] }}",
+              "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference40'] }}",
+              "{{ opening_data_eco90.loc[i[0]].loc[i[1]]['PointDifference40'] }}"],
               options: {
                   maintainAspectRatio: false,
                   responsive:true,
                   layout: {
                     padding: 20}},
               backgroundColor: [
-                'rgb(220,220,220)'
+                'rgb(220,220,220)',
+                'rgb(0, 150, 255)'
                     ],
      }]
    },
