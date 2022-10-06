@@ -41,12 +41,12 @@
 
  <div class="pieChartWrapper" style="position:absolute;">
   {% for i in opening_data_eco.index.to_list() %}
- 
-  <div class="pieChartContainer{{ loop.index }}" style="position: relative;">
-    <hr />
-    <h3>{{i[0]}}: {{i[1]}}</h3>
+  <hr />
+  <h3>{{i[0]}}: {{i[1]}}</h3>
+  <div class="pieChartContainer{{ loop.index }}" style="position: relative;float:left;">
     <canvas id="pieChart{{ loop.index }}" style="width:100%;height:100%;"></canvas>
   </div>
+
     <script>
       var myChart = new Chart(document.getElementById('pieChart{{ loop.index }}'), {
       type: 'pie',
@@ -71,7 +71,33 @@
      },
    });
     </script>
-    <br>
+  <div class="barChartContainer{{ loop.index }}" style="position: relative; float:right;">
+    <canvas id="barChart{{ loop.index }}" style="width:100%;height:100%;"></canvas>
+  </div>
+  <script>
+    var myChart = new Chart(document.getElementById('barChart{{ loop.index }}'), {
+    type: 'bar',
+    data: {
+      labels: ["Move 10","Move 20","Move 30","Move 40"],
+      datasets: [{
+        label: "{{i[0]}}: {{i[1]}}",
+        data: ["{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference10'] }}", 
+              "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference20'] }}",
+              "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference30'] }}",
+              "{{ opening_data_eco.loc[i[0]].loc[i[1]]['PointDifference40'] }}"],
+              options: {
+                  maintainAspectRatio: false,
+                  responsive:true,
+                  layout: {
+                    padding: 20}},
+              backgroundColor: [
+                'rgb(220,220,220)'
+                    ],
+     }]
+   },
+ });
+  </script>
+
   {% endfor %}
  </div>
   {% endblock %}
