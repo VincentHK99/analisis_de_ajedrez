@@ -10,6 +10,7 @@ from chessdotcom import get_leaderboards, get_player_stats, get_player_game_arch
 import requests
 import numpy as np
 import pandas as pd
+import math
 
 
 def pgn(game,timestamps=False,output='text'):
@@ -166,21 +167,77 @@ def castle_id(game):
   return castle_dict
 
 
+def endgame_begin(game):
+  """
+  Takes game data as an argurment and returns the move the the endgame begins in a given match.
+  (note: The endgame in this function is determed by when both players no longer have their queens)
+  """
+  endgame_begining = None
+  game_data = get_game_data(game)
+  #handle games which only have no moves with np.nan
+  try:
+    final_pieces_remaining = list(game_data['PiecesRemaining'][-1].keys())
+    #ieterate through each move to see what move that both players lose their queen
+    for i in range(len(game_data['PiecesRemaining'])):
+      pieces_remaining = list(game_data['PiecesRemaining'][i].keys())
+      if 'Q' not in pieces_remaining and 'q' not in pieces_remaining:
+          endgame_begining = int(game_data['MoveNumber'][i])
+          break
+    if endgame_begining == None:
+      # check if the game enters the endgame period (if the game ends before bothe players lose their queen)
+      if 'Q' in final_pieces_remaining or 'q' in final_pieces_remaining:
+        endgame_begining = np.nan
+  except:
+    endgame_begining = np.nan
+
+  return endgame_begining
+
+
 def game_sum(game):
   """
   A function that returns game data for prespecified move intervals
   """
-  move_intervals = [10, 15, 20, 25, 30, 40]
   summary_dict = {}
-  piece_names = {'r':'BRook','k':'BKing','b':'BBishop','n':'BKnight','q':'BQueen','p':'BPawn','R':'WRook','K':'WKing','B':'WBishop','N':'WKnight','Q':'WQueen','P':'WPawn'}
   game_data = get_game_data(game)
+  piece_names = {'r':'BRook','k':'BKing','b':'BBishop','n':'BKnight','q':'BQueen','p':'BPawn','R':'WRook','K':'WKing','B':'WBishop','N':'WKnight','Q':'WQueen','P':'WPawn'}
+  
+  # use endgame_begin function to specify what move the endgame begins
+
+  EndgameBegin = endgame_begin(game)
+  summary_dict['EndgameBegin'] = EndgameBegin
+  #use if statement to account for games thath end before the endgame begins (e.g have an np.nan value)
+  if math.isnan(EndgameBegin) == False:
+    # if endgame begin is not np.nan cast as integer so it gam be used as an index
+    EndgameBeginIndex = int(EndgameBegin)
+    summary_dict['PointDifferenceEndgameBegin'] = game_data['PointDifference'][EndgameBeginIndex-1]
+    summary_dict['TimeDifferenceEndgameBegin'] = game_data['TimeDifference'][EndgameBeginIndex-1]
+
+    for j in piece_names.keys():
+      if j in game_data['PiecesRemaining'][EndgameBeginIndex-1].keys():
+          summary_dict[piece_names[j] + 'RemainingEndgameBegin'] = game_data['PiecesRemaining'][EndgameBeginIndex-1][j]
+      else:
+          summary_dict[piece_names[j] + 'RemainingEndgameBegin'] = 0
+  else:
+    summary_dict['PointDifferenceEndgameBegin'] = np.nan
+    summary_dict['TimeDifferenceEndgameBegin'] = np.nan
+
+    for j in piece_names.keys():
+        summary_dict[piece_names[j] + 'RemainingEndgameBegin'] = np.nan
+
+
+  #declare pre-specified move intervals
+  move_intervals = [10, 15, 20, 25, 30, 40]
+  
+
+  #iterate through pre-specified move intervals to gain statistics at snapshots during the game
   for i in move_intervals:
     if len(game_data['MoveNumber'])-1 >= i:
       summary_dict['PointDifference'+str(i)] = game_data['PointDifference'][i-1]
       summary_dict['TimeDifference'+str(i)] = game_data['TimeDifference'][i-1]
       summary_dict['AvgPointDifferenceMove'+str(i)] = sum(game_data['PointDifference'][0:i-1])/len(game_data['PointDifference'][0:i-1])
       summary_dict['AvgTimeDifferenceMove'+str(i)] = sum(game_data['TimeDifference'][0:i-1])/len(game_data['TimeDifference'][0:i-1])
-
+      
+      #for each move interval create a column for each piece detailing how many units of that piece are remaining
       for j in piece_names.keys():
         if j in game_data['PiecesRemaining'][i-1].keys():
           summary_dict[piece_names[j] + 'Remaining' + str(i)] = game_data['PiecesRemaining'][i-1][j]
@@ -196,7 +253,7 @@ def game_sum(game):
       for j in piece_names.keys():
         summary_dict[piece_names[j] + 'Remaining' + str(i)] = np.nan
 
-
+  # handle exceptions if games have no moves
   if len(game_data['MoveNumber']) != 0:
     summary_dict['AvgPointDifferenceFullGame'] = sum(game_data['PointDifference'])/len(game_data['PointDifference'])
     summary_dict['AvgTimeDifferenceFullGame'] = sum(game_data['TimeDifference'])/len(game_data['TimeDifference'])
